@@ -1,0 +1,27 @@
+version: '3.7'
+
+
+x-backend-volumes: &backend-volumes
+  volumes:
+    - "./backend:${APP_DIR}"
+
+
+services:
+
+  backend:
+    <<: *backend-volumes
+    build:
+      args:
+        APP_STAGE: ${APP_STAGE}
+    ports:
+        - 8000:80
+
+  postgres:
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

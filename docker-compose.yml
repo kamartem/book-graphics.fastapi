@@ -1,0 +1,37 @@
+version: '3.7'
+
+volumes:
+  postgres_data:
+
+
+x-env: &env-file
+  env_file:
+    - .env.sample
+    - .env
+
+x-backend-base: &backend-base
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+
+services:
+
+  backend:
+    <<: *backend-base
+    <<: *env-file
+    build:
+      dockerfile: _docker/backend/Dockerfile
+      context: .
+      args:
+        APP_DIR: ${APP_DIR}
+    expose:
+      - 80
+
+  postgres:
+    <<: *env-file
+    image: postgres:11.4-alpine
+    restart: unless-stopped
+    command: postgres -c max_connections=100 -c shared_buffers=512MB -c effective_cache_size=1536MB -c work_mem=5242kB -c maintenance_work_mem=128MB -c min_wal_size=1GB -c max_wal_size=2GB -c checkpoint_completion_target=0.7 -c wal_buffers=16MB -c default_statistics_target=100
+    volumes:
+      - postgres_data:/var/lib/postgresql/data

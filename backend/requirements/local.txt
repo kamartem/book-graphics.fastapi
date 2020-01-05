@@ -1,0 +1,4 @@
+-r base.txt
+
+uvicorn==0.11.1
+jupyterlab==1.2.4
