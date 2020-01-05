@@ -1,0 +1,12 @@
+.DS_STORE
+
+.idea
+.vscode
+
+/static/**
+/backup/**
+/tmp/**
+/media/**
+/log/**
+
+.env
