@@ -1,1 +1,2 @@
 fastapi==0.45.0
+graphene==2.1.8
