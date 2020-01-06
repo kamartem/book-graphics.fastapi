@@ -16,9 +16,7 @@ ARG APP_DIR=/opt/app
 ARG APP_STAGE=prod
 
 COPY --from=builder /wheels /wheels
-RUN ls -la /wheels/
-RUN ls -la /wheels/requirements
-RUN ls -la "/wheels/requirements/${APP_STAGE}.txt"
+
 RUN pip install -U pip \
        && pip install -r "/wheels/requirements/${APP_STAGE}.txt" \
                       -f /wheels \
