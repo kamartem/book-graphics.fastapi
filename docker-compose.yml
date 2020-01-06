@@ -17,6 +17,16 @@ x-backend-base: &backend-base
 
 services:
 
+  nginx:
+    <<: *env-file
+    build:
+      context: .
+      dockerfile: "_docker/nginx/Dockerfile"
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - frontend
+  
   backend:
     <<: *backend-base
     <<: *env-file
@@ -25,8 +35,14 @@ services:
       context: .
       args:
         APP_DIR: ${APP_DIR}
-    expose:
-      - 80
+
+  frontend:
+    <<: *env-file
+    build:
+      dockerfile: _docker/frontend/prod.dockerfile
+      context: .
+      args:
+        APP_DIR: ${APP_DIR}
 
   postgres:
     <<: *env-file

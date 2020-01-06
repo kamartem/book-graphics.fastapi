@@ -1,0 +1,21 @@
+version: '3.7'
+
+
+services:
+  frontend:
+    volumes:
+      - "${APP_DIR}/node_modules"
+      - "./frontend:${APP_DIR}"
+    environment:
+      NODE_ENV: development
+      REACT_APP_API_BASE_URL: "http://127.0.0.1:3000/api/v1/"
+
+  postgres:
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

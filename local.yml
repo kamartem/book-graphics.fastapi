@@ -7,14 +7,26 @@ x-backend-volumes: &backend-volumes
 
 
 services:
-
+  
+  nginx:
+    ports:
+      - "3000:80"
+  
   backend:
     <<: *backend-volumes
     build:
       args:
         APP_STAGE: ${APP_STAGE}
-    ports:
-        - 8000:80
+  
+  frontend:
+    build:
+      dockerfile: _docker/frontend/local.dockerfile
+    volumes:
+      - "${APP_DIR}/node_modules"
+      - "./frontend:${APP_DIR}"
+    environment:
+      NODE_ENV: development
+      REACT_APP_API_BASE_URL: "http://127.0.0.1:3000/api/"
 
   postgres:
     ports:
