@@ -6,7 +6,7 @@ FROM ${BUILD_IMAGE} as builder
 
 ARG APP_STAGE=prod
 
-COPY ./backend/requirements/ /wheels/requirements/
+COPY ./requirements/ /wheels/requirements/
 
 RUN pip install -U pip && pip wheel -r "/wheels/requirements/${APP_STAGE}.txt"
 
@@ -23,9 +23,9 @@ RUN pip install -U pip \
        && rm -rf /wheels \
        && rm -rf /root/.cache/pip/*
 
-COPY ./_docker/backend/entrypoint /entrypoint
+COPY ./docker/entrypoint /entrypoint
 RUN chmod +x /entrypoint
-COPY ./backend/ "${APP_DIR}/"
+COPY ./ "${APP_DIR}/"
 
 WORKDIR "${APP_DIR}/src"
 ENV PYTHONPATH="${APP_DIR}/src"

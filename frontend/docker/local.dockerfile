@@ -5,7 +5,7 @@ ENV PATH "$APP_DIR/node_modules/.bin":$PATH
 
 WORKDIR $APP_DIR
 
-COPY ./frontend/ ./
+COPY ./src/ ./
 
 RUN npm ci
 

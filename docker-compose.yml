@@ -20,8 +20,8 @@ services:
   nginx:
     <<: *env-file
     build:
-      context: .
-      dockerfile: "_docker/nginx/Dockerfile"
+      context: nginx
+      dockerfile: docker/Dockerfile
     restart: unless-stopped
     depends_on:
       - backend
@@ -31,16 +31,16 @@ services:
     <<: *backend-base
     <<: *env-file
     build:
-      dockerfile: _docker/backend/Dockerfile
-      context: .
+      context: backend
+      dockerfile: docker/Dockerfile
       args:
         APP_DIR: ${APP_DIR}
 
   frontend:
     <<: *env-file
     build:
-      dockerfile: _docker/frontend/prod.dockerfile
-      context: .
+      context: frontend
+      dockerfile: docker/prod.dockerfile
       args:
         APP_DIR: ${APP_DIR}
 
