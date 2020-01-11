@@ -9,12 +9,12 @@ set -e
 #   sleep 1;
 # done
 
-export APP_MODULE=${APP_MODULE:-"main:app"}
+export APP_MODULE=${APP_MODULE:-"app.main:application"}
 
 alembic upgrade head
 
 if [ "$APP_STAGE" == "prod" ]; then
-  DEFAULT_GUNICORN_CONF="${APP_DIR}/config/gunicorn_conf.py"
+  DEFAULT_GUNICORN_CONF="${APP_DIR}/gunicorn_conf.py"
   export GUNICORN_CONF=${GUNICORN_CONF:-$DEFAULT_GUNICORN_CONF}
   exec gunicorn -k uvicorn.workers.UvicornWorker -c "$GUNICORN_CONF" "$APP_MODULE"
 else

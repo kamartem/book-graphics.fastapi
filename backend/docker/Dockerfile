@@ -25,10 +25,13 @@ RUN pip install -U pip \
 
 COPY ./docker/entrypoint /entrypoint
 RUN chmod +x /entrypoint
-COPY ./ "${APP_DIR}/"
 
-WORKDIR "${APP_DIR}/src"
-ENV PYTHONPATH="${APP_DIR}/src"
+COPY ./alembic.ini "${APP_DIR}/"
+COPY ./gunicorn.py "${APP_DIR}/"
+COPY ./app/ "${APP_DIR}/app/"
+
+WORKDIR "${APP_DIR}"
+ENV PYTHONPATH="${APP_DIR}"
 EXPOSE 80
 
 ENTRYPOINT [ "/entrypoint" ]
