@@ -9,10 +9,11 @@ x-env: &env-file
     - .env.sample
     - .env
 
+
 x-backend-base: &backend-base
-    restart: unless-stopped
-    depends_on:
-      - postgres
+  restart: unless-stopped
+  depends_on:
+    - postgres
 
 
 services:
@@ -26,7 +27,7 @@ services:
     depends_on:
       - backend
       - frontend
-  
+
   backend:
     <<: *backend-base
     <<: *env-file
