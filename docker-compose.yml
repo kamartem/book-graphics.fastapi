@@ -39,6 +39,7 @@ services:
 
   frontend:
     <<: *env-file
+    restart: unless-stopped
     build:
       context: frontend
       dockerfile: docker/prod.dockerfile
