@@ -8,8 +8,9 @@ WORKDIR $APP_DIR
 
 COPY ./src/ ./
 
-RUN npm ci
+RUN npm install
+RUN npm build
 
 EXPOSE 80
 
-CMD npm start
+CMD npm run dev
